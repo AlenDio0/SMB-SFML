@@ -1,5 +1,5 @@
 #include "SMB.hpp"
-#include "GameState.hpp"
+#include "EditorState.hpp"
 
 namespace SMB
 {
@@ -8,7 +8,10 @@ namespace SMB
 	{
 		m_Window.setVerticalSyncEnabled(true);
 
-		m_States.AddState<GameState>(false);
+		m_Assets.LoadTexture("tiles", "assets/tiles.png");
+
+		SpriteSheet tileSheet(m_Assets.GetTexture("tiles"), sf::Vector2u(2u, 1u), sf::Vector2u(16u, 16u));
+		m_States.AddState<EditorState>(false, tileSheet, m_Window);
 	}
 
 	void Engine::RunGame()
@@ -37,6 +40,13 @@ namespace SMB
 	{
 		if (event->is<sf::Event::Closed>())
 			m_Window.close();
+
+		if (const auto* resizedEvent = event->getIf<sf::Event::Resized>())
+		{
+			sf::View view = m_Window.getView();
+			view.setSize((sf::Vector2f)resizedEvent->size);
+			m_Window.setView(view);
+		}
 
 		m_States.GetCurrentState().OnEvent(event);
 	}

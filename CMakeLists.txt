@@ -19,3 +19,14 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_D
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_23)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SFML::Graphics)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SFML::Audio)
+
+set(ASSETS_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/assets)
+add_custom_target(COPY_ASSETS
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different 
+    ${ASSETS_FOLDER} $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/assets
+)
+set_target_properties(COPY_ASSETS PROPERTIES FOLDER "Setup")
+add_dependencies(${CMAKE_PROJECT_NAME} COPY_ASSETS)
+
+file(COPY ${ASSETS_FOLDER} DESTINATION ${CMAKE_BINARY_DIR})

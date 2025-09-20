@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "StateStack.hpp"
+#include "AssetManager.hpp"
 
 namespace SMB
 {
@@ -17,5 +18,6 @@ namespace SMB
 	private:
 		sf::RenderWindow m_Window;
 		StateStack m_States;
+		AssetManager m_Assets;
 	};
 }
