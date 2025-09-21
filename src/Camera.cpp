@@ -19,14 +19,12 @@ namespace SMB
 
 	void Camera::ZoomIn(float amount, float min) noexcept
 	{
-		if (m_ZoomFactor - amount > min)
-			m_ZoomFactor -= amount;
+		m_ZoomFactor = std::max(m_ZoomFactor - amount, min);
 	}
 
 	void Camera::ZoomOut(float amount, float max) noexcept
 	{
-		if (m_ZoomFactor + amount < max)
-			m_ZoomFactor += amount;
+		m_ZoomFactor = std::min(m_ZoomFactor + amount, max);
 	}
 
 	bool Camera::HasFocus() const noexcept
