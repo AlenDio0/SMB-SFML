@@ -1,10 +1,10 @@
 #pragma once
-#include "State.hpp"
-#include "TileMap.hpp"
-#include "SpriteSheet.hpp"
+#include "Core/State.hpp"
+#include "Core/TileMap.hpp"
+#include "Core/SpriteSheet.hpp"
+#include "Core/Camera.hpp"
 #include <SFML/Graphics.hpp>
 #include <optional>
-#include "Camera.hpp"
 
 namespace SMB
 {

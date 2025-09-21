@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "StateStack.hpp"
-#include "AssetManager.hpp"
+#include "Core/StateStack.hpp"
+#include "Core/AssetManager.hpp"
 
 namespace SMB
 {
