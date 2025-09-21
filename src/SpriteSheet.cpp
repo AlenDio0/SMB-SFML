@@ -4,8 +4,13 @@
 namespace SMB
 {
 	SpriteSheet::SpriteSheet(const sf::Texture& texture, sf::Vector2u size, sf::Vector2u spriteSize) noexcept
-		: _Texture(&texture), _Size(size), _SpriteSize(spriteSize)
+		: _TexturePtr(&texture), _Size(size), _SpriteSize(spriteSize)
 	{
+	}
+
+	uint32_t SpriteSheet::GetSizeID() const noexcept
+	{
+		return _Size.x * _Size.y;
 	}
 
 	std::optional<sf::IntRect> SpriteSheet::GetRect(uint32_t id) const noexcept

@@ -18,6 +18,9 @@ namespace SMB
 		virtual void OnUpdate(float deltaTime) override;
 		virtual void OnRender(sf::RenderTarget& target) override;
 	private:
+		void OnMouseWheelScrolledEvent(const sf::Event::MouseWheelScrolled& wheelScrolled) noexcept;
+		void OnKeyPressedEvent(const sf::Event::KeyPressed& keyPressed) noexcept;
+
 		void HandleMousePressed() noexcept;
 		void HandleCameraMovement(float deltaTime) noexcept;
 
@@ -31,9 +34,7 @@ namespace SMB
 		sf::RectangleShape CreateRect(sf::Vector2f size, sf::Vector2f position, sf::Color fillColor, sf::Color outlineColor, float thickness) const noexcept;
 	private:
 		TileMap m_TileMap;
-		SpriteSheet m_TileSheet;
-
-		uint32_t m_CurrentID = 0u;
+		uint32_t m_SelectedID = 0u;
 
 		Camera m_Camera;
 		sf::Vector2i m_MousePosition;
