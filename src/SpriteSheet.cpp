@@ -1,4 +1,5 @@
 #include "SpriteSheet.hpp"
+#include <cmath>
 
 namespace SMB
 {
