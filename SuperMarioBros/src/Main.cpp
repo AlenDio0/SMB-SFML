@@ -1,9 +1,9 @@
-#include "SMB.hpp"
+#include "AppSMB.hpp"
 
 int main(int argc, char* argv[])
 {
-    SMB::Engine engine;
-    engine.RunGame();
+	SMB::AppSMB app;
+	app.Run();
 
-    return 0;
+	return 0;
 }

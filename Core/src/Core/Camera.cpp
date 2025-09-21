@@ -1,6 +1,6 @@
 #include "Camera.hpp"
 
-namespace SMB
+namespace Core
 {
 	Camera::Camera(const sf::RenderWindow& window) noexcept
 		: m_WindowPtr(&window), m_Center(window.getView().getCenter())

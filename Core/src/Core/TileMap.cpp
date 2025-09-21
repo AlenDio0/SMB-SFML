@@ -1,6 +1,6 @@
 #include "TileMap.hpp"
 
-namespace SMB
+namespace Core
 {
 	TileMap::TileMap(sf::Vector2u mapSize, float tileSize, const SpriteSheet& tileSheet) noexcept
 		: m_TilePool(mapSize.x* mapSize.y, 0), m_MapSize(mapSize), m_TileSize(tileSize), m_TileSheet(tileSheet)
@@ -87,7 +87,7 @@ namespace SMB
 		}
 	}
 
-	size_t SMB::TileMap::GetIndex(sf::Vector2u position) const noexcept
+	size_t Core::TileMap::GetIndex(sf::Vector2u position) const noexcept
 	{
 		return (size_t)(position.y * m_MapSize.x) + position.x;
 	}

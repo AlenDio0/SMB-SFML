@@ -1,6 +1,6 @@
 #include "AssetManager.hpp"
 
-namespace SMB
+namespace Core
 {
 	void AssetManager::LoadTexture(std::string_view key, const std::filesystem::path& path) noexcept
 	{

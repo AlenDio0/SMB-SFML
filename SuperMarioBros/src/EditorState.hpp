@@ -1,17 +1,15 @@
 #pragma once
 #include "Core/State.hpp"
 #include "Core/TileMap.hpp"
-#include "Core/SpriteSheet.hpp"
 #include "Core/Camera.hpp"
-#include <SFML/Graphics.hpp>
 #include <optional>
 
 namespace SMB
 {
-	class EditorState : public State
+	class EditorState : public Core::State
 	{
 	public:
-		EditorState(const SpriteSheet& tileSheet, const sf::RenderWindow& window) noexcept;
+		EditorState(const Core::SpriteSheet& tileSheet, const sf::RenderWindow& window) noexcept;
 		~EditorState() noexcept = default;
 
 		virtual void OnEvent(const std::optional<sf::Event>& event) override;
@@ -33,10 +31,10 @@ namespace SMB
 	private:
 		sf::RectangleShape CreateRect(sf::Vector2f size, sf::Vector2f position, sf::Color fillColor, sf::Color outlineColor, float thickness) const noexcept;
 	private:
-		TileMap m_TileMap;
+		Core::TileMap m_TileMap;
 		uint32_t m_SelectedID = 0u;
 
-		Camera m_Camera;
+		Core::Camera m_Camera;
 		sf::Vector2i m_MousePosition;
 	};
 }

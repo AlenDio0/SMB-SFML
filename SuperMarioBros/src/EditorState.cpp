@@ -3,7 +3,7 @@
 
 namespace SMB
 {
-	EditorState::EditorState(const SpriteSheet& tileSheet, const sf::RenderWindow& window) noexcept
+	EditorState::EditorState(const Core::SpriteSheet& tileSheet, const sf::RenderWindow& window) noexcept
 		: m_TileMap(sf::Vector2u(16u, 10u), 48.f, tileSheet), m_Camera(window)
 	{
 	}

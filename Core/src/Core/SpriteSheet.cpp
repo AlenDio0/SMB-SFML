@@ -1,7 +1,7 @@
 #include "SpriteSheet.hpp"
 #include <cmath>
 
-namespace SMB
+namespace Core
 {
 	SpriteSheet::SpriteSheet(const sf::Texture& texture, sf::Vector2u size, sf::Vector2u spriteSize) noexcept
 		: _TexturePtr(&texture), _Size(size), _SpriteSize(spriteSize)

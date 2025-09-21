@@ -1,9 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "SpriteSheet.hpp"
 #include <vector>
+#include "SpriteSheet.hpp"
 
-namespace SMB
+namespace Core
 {
 	class TileMap
 	{
@@ -32,7 +32,6 @@ namespace SMB
 		void ExpandSizeY(uint32_t newSizeY) noexcept;
 	private:
 		std::vector<uint32_t> m_TilePool;
-
 		sf::Vector2u m_MapSize;
 		float m_TileSize;
 

@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <optional>
 
-namespace SMB
+namespace Core
 {
 	class SpriteSheet
 	{

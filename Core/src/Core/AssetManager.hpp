@@ -1,12 +1,11 @@
 #pragma once
-#include <unordered_map>
 #include <string>
-#include <memory>
 #include <filesystem>
+#include <unordered_map>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-namespace SMB
+namespace Core
 {
 	class AssetManager
 	{

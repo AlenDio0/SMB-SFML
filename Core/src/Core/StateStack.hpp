@@ -3,7 +3,7 @@
 #include <stack>
 #include <memory>
 
-namespace SMB
+namespace Core
 {
 	class StateStack
 	{

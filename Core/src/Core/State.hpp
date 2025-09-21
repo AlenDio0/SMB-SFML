@@ -3,10 +3,19 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-namespace SMB
+namespace Core
 {
 	class State
 	{
+	public:
+		struct Request
+		{
+			std::unique_ptr<State> _NewState;
+
+			bool _Add = false;
+			bool _Replace = false;
+			bool _Remove = false;
+		};
 	public:
 		State() noexcept = default;
 		virtual ~State() noexcept = default;
@@ -18,16 +27,7 @@ namespace SMB
 		inline virtual void OnEvent(const std::optional<sf::Event>& event) {}
 		inline virtual void OnUpdate(float deltaTime) {}
 		inline virtual void OnRender(sf::RenderTarget& target) {}
-	public:
-		struct Request
-		{
-			std::unique_ptr<State> _NewState;
 
-			bool _Add = false;
-			bool _Replace = false;
-			bool _Remove = false;
-		};
-	public:
 		inline bool HasRequest() const noexcept { return m_Request._Add || m_Request._Remove; }
 		inline Request& GetRequest() noexcept { return m_Request; }
 		inline void ResetRequest() noexcept { m_Request = Request{}; }

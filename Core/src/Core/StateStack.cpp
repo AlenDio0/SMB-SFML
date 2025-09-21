@@ -1,6 +1,6 @@
 #include "StateStack.hpp"
 
-namespace SMB
+namespace Core
 {
 	StateStack::~StateStack() noexcept
 	{

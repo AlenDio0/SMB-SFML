@@ -3,7 +3,7 @@
 
 namespace SMB
 {
-	class GameState : public State
+	class GameState : public Core::State
 	{
 	public:
 		GameState() noexcept;
