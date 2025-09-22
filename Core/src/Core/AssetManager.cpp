@@ -9,6 +9,11 @@ namespace Core
 			m_Textures.emplace(key, std::move(texture));
 	}
 
+	void AssetManager::LoadSheet(std::string_view key, const std::filesystem::path& path) noexcept
+	{
+		m_Sheets.emplace(key, SpriteSheet(path, *this));
+	}
+
 	void AssetManager::LoadFont(std::string_view key, const std::filesystem::path& path) noexcept
 	{
 		sf::Font font;
@@ -29,6 +34,14 @@ namespace Core
 			throw std::runtime_error("Texture not found: " + std::string(key));
 
 		return m_Textures.at(key);
+	}
+
+	const SpriteSheet& AssetManager::GetSheet(std::string_view key) const
+	{
+		if (!m_Sheets.contains(key))
+			throw std::runtime_error("SpriteSheet not found: " + std::string(key));
+
+		return m_Sheets.at(key);
 	}
 
 	const sf::Font& AssetManager::GetFont(std::string_view key) const

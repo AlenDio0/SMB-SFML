@@ -8,10 +8,10 @@ namespace SMB
 	{
 		m_Window.setVerticalSyncEnabled(true);
 
-		m_Assets.LoadTexture("tiles", "assets/tiles.png");
+		m_Assets.LoadTexture("Tile", "assets/tiles.png");
+		m_Assets.LoadSheet("Tile", "data/tiles.sheet");
 
-		Core::SpriteSheet tileSheet(m_Assets.GetTexture("tiles"), sf::Vector2u(2u, 1u), sf::Vector2u(16u, 16u));
-		m_States.AddState<EditorState>(false, tileSheet, m_Window);
+		m_States.AddState<EditorState>(false, m_Assets.GetSheet("Tile"), m_Window);
 	}
 
 	void AppSMB::OnEvent(const std::optional<sf::Event>& event)
