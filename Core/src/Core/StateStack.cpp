@@ -34,7 +34,7 @@ namespace Core
 		m_CurrentRequest._Remove = true;
 	}
 
-	bool StateStack::ProcessStateChanges() noexcept
+	bool StateStack::ProcessStateChanges()
 	{
 		CheckStateRequest();
 

@@ -24,7 +24,7 @@ namespace Core
 			AddState(std::make_unique<S>(std::forward<Args>(args)...), replace);
 		}
 
-		bool ProcessStateChanges() noexcept;
+		bool ProcessStateChanges();
 	private:
 		void CheckStateRequest();
 		void OnAdding();

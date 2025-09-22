@@ -133,7 +133,7 @@ namespace Core
 
 	void TileMap::ShrinkSizeY(uint32_t newSizeY) noexcept
 	{
-		m_TilePool.erase(m_TilePool.begin() + GetIndex(sf::Vector2u(0, newSizeY + 1)), m_TilePool.end());
+		m_TilePool.erase(m_TilePool.begin() + GetIndex(sf::Vector2u(0, newSizeY)), m_TilePool.end());
 
 		m_MapSize.y = newSizeY;
 	}

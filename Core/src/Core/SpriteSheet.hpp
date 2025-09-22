@@ -15,7 +15,7 @@ namespace Core
 		std::optional<sf::IntRect> GetRect(uint32_t id) const noexcept;
 		std::optional<sf::IntRect> GetRect(sf::Vector2i position) const noexcept;
 	public:
-		const sf::Texture* _TexturePtr;
+		const sf::Texture* _TexturePtr = nullptr;
 
 		const sf::Vector2u _Size;
 		const sf::Vector2u _SpriteSize;

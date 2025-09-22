@@ -25,6 +25,6 @@ namespace Core
 		sf::Vector2f m_Center;
 		float m_ZoomFactor = 1.f;
 
-		const sf::RenderWindow* m_WindowPtr;
+		const sf::RenderWindow* m_WindowPtr = nullptr;
 	};
 }

@@ -87,6 +87,8 @@ namespace SMB
 			if (keyPressed.alt)
 				m_TileMap.setTileSize(tileSize - (tileSize >= 1.f ? 1.f : 0.f));
 			break;
+		default:
+			break;
 		}
 	}
 

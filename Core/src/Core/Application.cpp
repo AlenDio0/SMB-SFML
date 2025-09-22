@@ -23,18 +23,18 @@ namespace Core
 				m_Window.close();
 				break;
 			}
-			State& currentState = m_States.GetCurrentState();
+			State& state = m_States.GetCurrentState();
 
 			while (auto event = m_Window.pollEvent())
 			{
 				OnEvent(event);
-				m_States.GetCurrentState().OnEvent(event);
+				state.OnEvent(event);
 			}
 
-			m_States.GetCurrentState().OnUpdate(deltaTime);
+			state.OnUpdate(deltaTime);
 
 			m_Window.clear();
-			m_States.GetCurrentState().OnRender(m_Window);
+			state.OnRender(m_Window);
 			m_Window.display();
 		}
 	}
