@@ -41,9 +41,9 @@ namespace SMB
 
 	void EditorState::OnMouseWheelScrolledEvent(const sf::Event::MouseWheelScrolled& wheelScrolled) noexcept
 	{
-		const float ratio = (m_TileMap.GetMapSize().x + m_TileMap.GetMapSize().y) * m_TileMap.GetTileSize();
-		const float minZoom = ratio / 2000.f;
-		const float maxZoom = std::max(ratio / 500.f, minZoom * 2.f);
+		const float ratio = (m_TileMap.GetMapSize().x + m_TileMap.GetMapSize().y) * m_TileMap.GetTileSize() / 500.f;
+		const float minZoom = ratio / 4.f;
+		const float maxZoom = std::max(ratio, minZoom * 2.f);
 
 		const float zoomAmount = m_Camera.GetZoomFactor() / 10.f;
 
@@ -58,9 +58,10 @@ namespace SMB
 		const sf::Vector2u& mapSize = m_TileMap.GetMapSize();
 		const float& tileSize = m_TileMap.GetTileSize();
 
-		using Key = sf::Keyboard::Key;
 		switch (keyPressed.code)
 		{
+			using Key = sf::Keyboard::Key;
+
 		case Key::O:
 			m_Camera.MoveX(-m_Camera.GetView().getCenter().x);
 			m_Camera.MoveY(-m_Camera.GetView().getCenter().y);
@@ -69,7 +70,7 @@ namespace SMB
 			m_SelectedID -= m_SelectedID != 0u;
 			break;
 		case Key::E:
-			m_SelectedID = std::min(++m_SelectedID, m_TileMap.GetTileSheet().GetSizeID() - 1u);
+			m_SelectedID = std::min(++m_SelectedID, m_TileMap.GetTileSheet().GetIDSize() - 1u);
 			break;
 		case Key::Add:
 			if (keyPressed.control)
@@ -98,14 +99,12 @@ namespace SMB
 		if (sf::Mouse::isButtonPressed(Button::Left))
 			SetMouseTile(m_SelectedID);
 		if (sf::Mouse::isButtonPressed(Button::Right))
-			SetMouseTile(m_TileMap.GetTileSheet().GetSizeID());
+			SetMouseTile(m_TileMap.GetTileSheet().GetIDSize());
 	}
 
 	void EditorState::HandleCameraMovement(float deltaTime) noexcept
 	{
-		float cameraSpeed = 1000.f * deltaTime * m_Camera.GetZoomFactor();
-		if (cameraSpeed > 1.f)
-			cameraSpeed = ceil(cameraSpeed);
+		float cameraSpeed = (1000.f * m_Camera.GetZoomFactor()) * deltaTime;
 
 		using Key = sf::Keyboard::Key;
 		if (sf::Keyboard::isKeyPressed(Key::A))

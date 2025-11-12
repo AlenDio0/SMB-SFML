@@ -17,27 +17,42 @@ namespace Core
 	{
 	}
 
-	uint32_t SpriteSheet::GetSizeID() const noexcept
+	uint32_t SpriteSheet::GetIDSize() const noexcept
 	{
 		return _Size.x * _Size.y;
 	}
 
-	std::optional<sf::IntRect> SpriteSheet::GetRect(std::string_view key) const noexcept
+	const Sprite& SpriteSheet::GetSprite(std::string_view key) const
 	{
-		return GetRect(m_Sprites.GetSprite(key)._Position);
+		return m_Sprites.GetSprite(key);
+	}
+
+	sf::Vector2u SpriteSheet::GetPosition(uint32_t id) const noexcept
+	{
+		return sf::Vector2u(id % _Size.x, floor(id / _Size.x));
+	}
+
+	uint32_t SpriteSheet::GetID(sf::Vector2u position) const noexcept
+	{
+		return position.y * _Size.x + position.x;
+	}
+
+	std::optional<sf::IntRect> SpriteSheet::GetRect(const Sprite& sprite) const noexcept
+	{
+		return GetRect(sprite._Position);
 	}
 
 	std::optional<sf::IntRect> SpriteSheet::GetRect(uint32_t id) const noexcept
 	{
-		return GetRect(sf::Vector2i(id % _Size.x, floor(id / _Size.x)));
+		return GetRect(GetPosition(id));
 	}
 
-	std::optional<sf::IntRect> SpriteSheet::GetRect(sf::Vector2i position) const noexcept
+	std::optional<sf::IntRect> SpriteSheet::GetRect(sf::Vector2u position) const noexcept
 	{
 		if (position.x >= _Size.x || position.y >= _Size.y)
 			return std::nullopt;
 
-		return sf::IntRect(position.componentWiseMul((sf::Vector2i)_SpriteSize), (sf::Vector2i)_SpriteSize);
+		return sf::IntRect((sf::Vector2i)position.componentWiseMul((sf::Vector2u)_SpriteSize), (sf::Vector2i)_SpriteSize);
 	}
 
 	SpriteSheet SpriteSheet::LoadFromFile(const std::filesystem::path& path, const AssetManager& assets)

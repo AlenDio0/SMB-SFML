@@ -8,7 +8,7 @@ namespace Core
 {
 	struct Sprite
 	{
-		sf::Vector2i _Position;
+		sf::Vector2u _Position;
 		// TODO: Add flags & etc...
 	};
 
@@ -22,8 +22,6 @@ namespace Core
 		void AddSprite(std::string_view key, const Sprite& sprite) noexcept;
 
 		const Sprite& GetSprite(std::string_view key) const;
-
-
 	private:
 		std::unordered_map<std::string_view, Sprite> m_Sprites;
 	};

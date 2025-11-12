@@ -31,10 +31,10 @@ namespace Core
 		void ShrinkSizeY(uint32_t newSizeY) noexcept;
 		void ExpandSizeY(uint32_t newSizeY) noexcept;
 	private:
-		std::vector<uint32_t> m_TilePool;
+		std::vector<uint32_t> m_Tiles;
 		sf::Vector2u m_MapSize;
 		float m_TileSize;
 
-		SpriteSheet m_TileSheet;
+		const SpriteSheet* m_TileSheetPtr = nullptr;
 	};
 }

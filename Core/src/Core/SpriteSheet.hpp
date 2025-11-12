@@ -16,11 +16,16 @@ namespace Core
 		SpriteSheet(const sf::Texture& texture, sf::Vector2u size, sf::Vector2u spriteSize, const SpriteBank& sprites = {}) noexcept;
 		~SpriteSheet() noexcept = default;
 
-		uint32_t GetSizeID() const noexcept;
+		uint32_t GetIDSize() const noexcept;
 
-		std::optional<sf::IntRect> GetRect(std::string_view key) const noexcept;
+		const Sprite& GetSprite(std::string_view key) const;
+
+		sf::Vector2u GetPosition(uint32_t id) const noexcept;
+		uint32_t GetID(sf::Vector2u position) const noexcept;
+
+		std::optional<sf::IntRect> GetRect(const Sprite& sprite) const noexcept;
 		std::optional<sf::IntRect> GetRect(uint32_t id) const noexcept;
-		std::optional<sf::IntRect> GetRect(sf::Vector2i position) const noexcept;
+		std::optional<sf::IntRect> GetRect(sf::Vector2u position) const noexcept;
 	public:
 		const sf::Texture* _TexturePtr = nullptr;
 
