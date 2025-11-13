@@ -5,20 +5,16 @@
 
 namespace Core
 {
+	class Application;
+
 	class State
 	{
 	public:
-		struct Request
-		{
-			std::unique_ptr<State> _NewState;
+		inline State() noexcept = default;
+		inline virtual ~State() noexcept = default;
 
-			bool _Add = false;
-			bool _Replace = false;
-			bool _Remove = false;
-		};
-	public:
-		State() noexcept = default;
-		virtual ~State() noexcept = default;
+		inline virtual void OnAdd() {}
+		inline virtual void OnRemove() {}
 
 		inline virtual void OnInit() {}
 		inline virtual void OnPause() {}
@@ -27,25 +23,16 @@ namespace Core
 		inline virtual void OnEvent(const std::optional<sf::Event>& event) {}
 		inline virtual void OnUpdate(float deltaTime) {}
 		inline virtual void OnRender(sf::RenderTarget& target) {}
-
-		inline bool HasRequest() const noexcept { return m_Request._Add || m_Request._Remove; }
-		inline Request& GetRequest() noexcept { return m_Request; }
-		inline void ResetRequest() noexcept { m_Request = Request{}; }
 	protected:
-		template<typename S, typename... Args>
+		Application& GetApp() const noexcept;
+
+		template<typename T, typename... Args>
 		inline void AddState(bool replace, Args&& ... args) noexcept
 		{
-			m_Request._NewState = std::make_unique<S>(std::forward<Args>(args)...);
-
-			m_Request._Add = true;
-			m_Request._Replace = replace;
+			QueueState(std::move(std::make_unique<T>(std::forward<Args>(args)...)), replace);
 		}
-
-		inline void RemoveState() noexcept
-		{
-			m_Request._Remove = true;
-		}
+		void RemoveState() const noexcept;
 	private:
-		Request m_Request;
+		void QueueState(std::unique_ptr<State> state, bool replace) const noexcept;
 	};
 }

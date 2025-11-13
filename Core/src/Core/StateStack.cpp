@@ -2,89 +2,71 @@
 
 namespace Core
 {
-	StateStack::~StateStack() noexcept
-	{
-		Clear();
-	}
-
-	void StateStack::Clear() noexcept
-	{
-		while (!m_Stack.empty())
-			m_Stack.pop();
-	}
-
-	State& StateStack::GetCurrentState() const
-	{
-		if (m_Stack.empty())
-			throw std::runtime_error("Attempted to get the current State from an empty stack");
-
-		return *m_Stack.top().get();
-	}
-
 	void StateStack::AddState(std::unique_ptr<State> state, bool replace) noexcept
 	{
-		m_CurrentRequest._NewState.swap(state);
+		m_NewState = std::move(state);
 
-		m_CurrentRequest._Add = true;
-		m_CurrentRequest._Replace = replace;
+		m_Adding = true;
+		m_Removing = replace;
 	}
 
 	void StateStack::RemoveState() noexcept
 	{
-		m_CurrentRequest._Remove = true;
+		m_Removing = true;
 	}
 
 	bool StateStack::ProcessStateChanges()
 	{
-		CheckStateRequest();
-
-		if (m_CurrentRequest._Remove)
+		if (m_Removing)
 			OnRemoving();
 
-		if (m_CurrentRequest._Add)
+		if (m_Adding)
 			OnAdding();
 
-		return !m_Stack.empty();
+		return !m_States.empty();
 	}
 
-	void StateStack::CheckStateRequest()
+	State& StateStack::GetCurrentState() const
 	{
-		if (!m_Stack.empty() && m_Stack.top()->HasRequest())
-		{
-			m_CurrentRequest = std::move(m_Stack.top()->GetRequest());
-			m_Stack.top()->ResetRequest();
-		}
+		if (m_States.empty())
+			throw std::runtime_error("Attempted to get the current State from an empty stack");
+
+		return *m_States.top();
 	}
 
-	void StateStack::OnAdding()
+	void StateStack::Clear() noexcept
 	{
-		if (!m_CurrentRequest._NewState)
-			throw std::runtime_error("Attempted to process a nullptr State");
-
-		if (!m_Stack.empty())
-		{
-			if (m_CurrentRequest._Replace)
-				m_Stack.pop();
-			else
-				m_Stack.top()->OnPause();
-		}
-
-		m_Stack.push(std::move(m_CurrentRequest._NewState));
-
-		m_CurrentRequest._Add = false;
-		m_CurrentRequest._Replace = false;
+		while (!m_States.empty())
+			OnRemoving();
 	}
 
-	void StateStack::OnRemoving()
+	void StateStack::OnAdding() noexcept
 	{
-		if (m_Stack.empty())
-			throw std::runtime_error("Attempted to remove on an empty stack");
+		if (!m_NewState)
+			return;
 
-		m_Stack.pop();
+		if (!m_States.empty())
+			m_States.top()->OnPause();
 
-		if (!m_Stack.empty())
-			m_Stack.top()->OnResume();
+		m_States.push(std::move(m_NewState));
+		m_States.top()->OnAdd();
 
-		m_CurrentRequest._Remove = false;
+		m_NewState.reset();
+
+		m_Adding = false;
+		m_Removing = false;
+	}
+
+	void StateStack::OnRemoving() noexcept
+	{
+		if (m_States.empty())
+			return;
+
+		m_States.pop();
+
+		if (!m_States.empty())
+			m_States.top()->OnResume();
+
+		m_Removing = false;
 	}
 }

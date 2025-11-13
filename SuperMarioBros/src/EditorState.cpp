@@ -1,10 +1,11 @@
 #include "EditorState.hpp"
+#include <Core/Application.hpp>
 #include <cmath>
 
 namespace SMB
 {
-	EditorState::EditorState(const Core::SpriteSheet& tileSheet, const sf::RenderWindow& window) noexcept
-		: m_TileMap(sf::Vector2u(16u, 10u), 48.f, tileSheet), m_Camera(window)
+	EditorState::EditorState(const Core::SpriteSheet& tileSheet) noexcept
+		: m_TileMap(sf::Vector2u(16u, 10u), 48.f, tileSheet), m_Camera(GetApp().GetWindow())
 	{
 	}
 
@@ -87,6 +88,9 @@ namespace SMB
 				m_TileMap.ResizeMap(mapSize - sf::Vector2u(0u, mapSize.y != 0u));
 			if (keyPressed.alt)
 				m_TileMap.setTileSize(tileSize - (tileSize >= 1.f ? 1.f : 0.f));
+			break;
+		case Key::F:
+			RemoveState();
 			break;
 		default:
 			break;

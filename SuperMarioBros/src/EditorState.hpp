@@ -9,7 +9,7 @@ namespace SMB
 	class EditorState : public Core::State
 	{
 	public:
-		EditorState(const Core::SpriteSheet& tileSheet, const sf::RenderWindow& window) noexcept;
+		EditorState(const Core::SpriteSheet& tileSheet) noexcept;
 		~EditorState() noexcept = default;
 
 		virtual void OnEvent(const std::optional<sf::Event>& event) override;

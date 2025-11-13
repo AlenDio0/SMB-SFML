@@ -7,7 +7,7 @@ namespace Core
 	{
 	public:
 		Camera(const sf::RenderWindow& window) noexcept;
-		~Camera() noexcept = default;;
+		~Camera() noexcept = default;
 
 		void MoveX(float offsetX) noexcept;
 		void MoveY(float offsetY) noexcept;
